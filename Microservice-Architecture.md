@@ -48,6 +48,11 @@ logging.level.com.netflix.discovery=OFF
 
 ### API Gateway
 
+Dependencies needed:
+1. Eureka client
+2. Gateway
+3. Spring Boot Actuator
+
 Your API gateway will be the place where all calls are made
 
 ####
