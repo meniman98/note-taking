@@ -55,5 +55,29 @@ Dependencies needed:
 
 Your API gateway will be the place where all calls are made
 
+Make sure to enable eureka on the main application. Below is an example of your properties file
+
+```
+server.port = 9191
+spring.application.name = API-GATEWAY
+
+spring.cloud.gateway.routes[0].id = SHARE-SERVICE
+spring.cloud.gateway.routes[0].uri = lb://SHARE-SERVICE
+spring.cloud.gateway.routes[0].predicates = Path=/shares/**
+
+spring.cloud.gateway.routes[0].filters[0].name = CircuitBreaker
+spring.cloud.gateway.routes[0].filters[0].args.name = SHARE-SERVICE
+spring.cloud.gateway.routes[0].filters[0].args.fallbackuri = forward:/fallback
+
+hystrix.command.fallbackcmd.execution.isolation.thread.timeoutInMilliseconds = 4000
+management.endpoints.web.exposure.include = hystrix.stream
+
+eureka.client.register-with-eureka = true
+eureka.client.fetch-registry = true
+eureka.client.service-url.defaultZone: http://localhost:8761/eureka/
+eureka.client.instance.hostname = localhost
+eureka.instance.prefer-ip-address=true
+```
+
 ####
 
