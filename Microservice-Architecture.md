@@ -55,7 +55,7 @@ Dependencies needed:
 
 Your API gateway will be the place where all calls are made
 
-Make sure to enable eureka on the main application. Below is an example of your properties file
+Make sure to enable eureka and hystrix dashboard on the main application. Below is an example of your properties file
 
 ```
 server.port = 9191
@@ -79,5 +79,30 @@ eureka.client.instance.hostname = localhost
 eureka.instance.prefer-ip-address=true
 ```
 
-####
+### Hystrix Dashboard
+
+Dependencies needed:
+1. Eureka client
+2. Hystrix dashboard
+
+On the main application, enable eureka client and hystrix dashboard.
+
+To access hystrix, navigate to your API gateway, and type localhost:9191/actuator/hystrix.stream
+
+Then navigate to hystrix localhost:9101/hystrix and insert localhost:9191/actuator/hystrix.stream into the text field to open the dashboard
+
+Below is an example of a properties file for hystrix
+
+```
+hystrix.dashboard.proxy-stream-allow-list = "*"
+server.port = 9101
+spring.application.name = HYSTRIX-DASHBOARD
+eureka.client.register-with-eureka = true
+eureka.client.fetch-registry = true
+eureka.client.service-url.defaultZone: http://localhost:8761/eureka/
+eureka.client.instance.hostname = localhost
+eureka.instance.prefer-ip-address=true
+```
+
+Navi
 
